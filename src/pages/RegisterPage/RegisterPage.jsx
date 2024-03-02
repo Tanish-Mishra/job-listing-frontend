@@ -1,10 +1,12 @@
 import React from 'react'
 import styles from './RegisterPage.module.css'
 import Register from '../../components/Register/Register'
+import Banner from '/assets/images/banner.png'
 const RegisterPage = () => {
   return (
-    <div>
+    <div className={styles.register}>
         <Register/>
+        <img src={Banner} alt='error'/>
     </div>
   )
 }

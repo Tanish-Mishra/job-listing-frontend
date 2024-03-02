@@ -48,6 +48,9 @@
 .login__submitbtn:hover {
   scale: 1.01;
 }
+a:visited {
+    color: #000;
+}
 .login__text {
     color:#525252;
 }

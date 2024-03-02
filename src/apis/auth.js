@@ -1,11 +1,24 @@
 import React from 'react'
-
-const auth = () => {
+import axios from 'axios';
+import errorHandler from '../utils/errorHandler';
+const BACKENDURI= import.meta.env.VITE_BACKEND_URI;
+export const checkLogin = async(name,email,password) => {
   try {
-   
+     const reqUrl = `${BACKENDURI}/auth/login`
+     const response = await axios.post(reqUrl,{name,email,password})
+     return response
   } catch (error) {
-    console.log(error)
+    errorHandler('Check Your Password/Username!')
   }
 }
 
-export default auth
+export const register = async(name,email,password) =>{
+    try {
+        const reqUrl = `${BACKENDURI}/auth/register`
+        const response = await axios.post(reqUrl,{name,email,password})
+        return response
+    } catch (error) {
+        errorHandler('Api Failed!')
+    }
+}
+
