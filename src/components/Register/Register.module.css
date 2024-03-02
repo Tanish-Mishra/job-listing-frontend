@@ -60,8 +60,9 @@ a:visited {
     color:#000;
     text-decoration: underline;
 }
-.register__policy {
-    font-size: 13px;
-    font-weight: 300;
-    color: #525252;
+
+.register__error {
+    color: red;
+    margin:-0.7rem 0 0.4rem 0;
+    font-size: 0.9rem;
 }

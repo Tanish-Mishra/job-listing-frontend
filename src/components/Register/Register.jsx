@@ -12,6 +12,12 @@ const Register = () => {
     email: "",
     password: "",
   });
+  const [isValid,setIsValid] = useState(true)
+  const [error,setError] = useState({
+    name: "",
+    email: "",
+    password: "",
+  })
 
   const handleChange = (event) => {
     setFormData({
@@ -28,11 +34,79 @@ const Register = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-        if(!formData.name || !formData.email || !formData.password) {
-             errorHandler("Empty Fields!")
-        } else {
-        createUser(formData.name,formData.email,formData.password)
-        }
+    setError({
+      name: "",
+      email: "",
+      password: "",
+    })
+ setIsValid(true)
+ let valid = true;
+    if (!formData.name.trim().length) {
+      setError((prev) => {
+        return {
+          ...prev,
+          name: "Name Field is Required !",
+        };
+      });
+      setIsValid(false)
+      valid = false
+    } else if (!/^[a-zA-Z\s]+$/.test(formData.name)) {
+      setError((prev) => {
+        return {
+          ...prev,
+          name: "Name should contain only letters and spaces !",
+        };
+      });
+      setIsValid(false)
+      valid = false
+
+    }
+    if (!formData.email.trim().length) {
+      setError((prev) => {
+        return {
+          ...prev,
+          email: "Email Field is Required!",
+        };
+      });
+      setIsValid(false)
+      valid = false
+
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      setError((prev) => {
+        return {
+          ...prev,
+          email: "Email is not Valid!",
+        };
+      });
+      setIsValid(false)
+      valid = false
+
+    }
+    if (!formData.password.trim().length) {
+      setError((prev) => {
+        return {
+          ...prev,
+          password: "Password Field is Required!",
+        };
+      });
+      setIsValid(false)
+      valid = false
+
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(formData.password)) {
+      setError((prev) => {
+        return {
+          ...prev,
+          password: "Password is not Valid!",
+        };
+      });
+      setIsValid(false)
+      valid = false
+
+    }
+
+   if(valid){
+    createUser(formData.name,formData.email,formData.password)
+   } 
   }
   return (
     <div className={styles.register}>
@@ -47,8 +121,12 @@ const Register = () => {
           onChange={(event) => {
             handleChange(event);
           }}
+          style={{
+            border: `${error.name ? "2px solid red": "2px solid #C2C2C2"}`
+          }}
           required
         />
+        <span className={styles.register__error}>{error.name}</span>
         <input
           type="text"
           name="email"
@@ -56,8 +134,12 @@ const Register = () => {
           onChange={(event) => {
             handleChange(event);
           }}
+          style={{
+            border: `${error.email ? "2px solid red": "2px solid #C2C2C2"}`
+          }}
           required
         />
+        <span className={styles.register__error}>{error.email}</span>
         <input
           type="password"
           name="password"
@@ -65,12 +147,12 @@ const Register = () => {
           onChange={(event) => {
             handleChange(event);
           }}
+          style={{
+            border: `${error.password ? "2px solid red": "2px solid #C2C2C2"}`
+          }}
           required
         />
-
-        <div className={styles.register__policy}>
-          By creating an account, I agree to our terms of use and privacy policy
-        </div>
+        <span className={styles.register__error}>{error.password}</span>
         <button className={styles.register__submitbtn} onClick={(event)=>{
           handleSubmit(event)
         }}>Create Account</button>

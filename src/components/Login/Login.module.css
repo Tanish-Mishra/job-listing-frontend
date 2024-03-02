@@ -60,3 +60,8 @@ a:visited {
     color:#000;
     text-decoration: underline;
 }
+.login__error {
+    color: red;
+    margin:-0.7rem 0 0.4rem 0;
+    font-size: 0.9rem;
+}

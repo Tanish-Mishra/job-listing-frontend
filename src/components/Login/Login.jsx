@@ -13,7 +13,7 @@ const Login = () => {
     email: "",
     password: "",
   });
-
+ const [isValid,setIsValid] = useState(true)
   const [error,setError] = useState({
     name: "",
     email: "",
@@ -26,15 +26,83 @@ const Login = () => {
   const authLogin = async (name, email, password) => {
     const response = await checkLogin(name, email, password);
     if (response?.data?.name) {
-      navigate("/register");
+      navigate("/");
     }
   };
 
   const handleLogin = (event) => {
     event.preventDefault();
-    if ((!formData.name, !formData.email || !formData.password)) {
-      errorHandler("Empty Fields!");
-    } else {
+    setError({
+      name: "",
+      email: "",
+      password: "",
+    })
+  let valid = true;
+ setIsValid(true)
+    if (!formData.name.trim().length) {
+      setError((prev) => {
+        return {
+          ...prev,
+          name: "Name Field is Required !",
+        };
+      });
+      setIsValid(false)
+      valid = false
+
+    } else if (!/^[a-zA-Z\s]+$/.test(formData.name)) {
+      setError((prev) => {
+        return {
+          ...prev,
+          name: "Name should contain only letters and spaces !",
+        };
+      });
+      setIsValid(false)
+      valid = false
+
+    }
+    if (!formData.email.trim().length) {
+      setError((prev) => {
+        return {
+          ...prev,
+          email: "Email Field is Required!",
+        };
+      });
+      setIsValid(false)
+      valid = false
+
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      setError((prev) => {
+        return {
+          ...prev,
+          email: "Email is not Valid!",
+        };
+      });
+      setIsValid(false)
+      valid = false
+
+    }
+    if (!formData.password.trim().length) {
+      setError((prev) => {
+        return {
+          ...prev,
+          password: "Password Field is Required!",
+        };
+      });
+      setIsValid(false)
+      valid = false
+
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(formData.password)) {
+      setError((prev) => {
+        return {
+          ...prev,
+          password: "Password is not Valid!",
+        };
+      });
+      setIsValid(false)
+      valid = false
+
+    }   
+ if(valid){
       authLogin(formData.name, formData.email, formData.password);
     }
   };
@@ -51,7 +119,11 @@ const Login = () => {
           onChange={(event) => {
             onChangeHandler(event);
           }}
+          style={{
+            border: `${error.name ? "2px solid red": "2px solid #C2C2C2"}`
+          }}
         />
+        <span className={styles.login__error}>{error.name}</span>
         <input
           type="text"
           name="email"
@@ -59,7 +131,11 @@ const Login = () => {
           onChange={(event) => {
             onChangeHandler(event);
           }}
+          style={{
+            border: `${error.email ? "2px solid red": "2px solid #C2C2C2"}`
+          }}
         />
+        <span className={styles.login__error}>{error.email}</span>
         <input
           type="password"
           name="password"
@@ -67,7 +143,11 @@ const Login = () => {
           onChange={(event) => {
             onChangeHandler(event);
           }}
+          style={{
+            border: `${error.password ? "2px solid red": "2px solid #C2C2C2"}`
+          }}
         />
+        <span className={styles.login__error}>{error.password}</span>
         <button
           className={styles.login__submitbtn}
           onClick={(event) => {
