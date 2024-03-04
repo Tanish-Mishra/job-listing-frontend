@@ -12,6 +12,9 @@ const Home = () => {
                   <button className={`${styles.header__btn} ${styles.header__register}`} onClick={()=>{navigate('/register')}}>Register</button>
                </div>
          </div>
+         <div className={styles.home__body}>
+                
+                </div>
     </div>
   )
 }
