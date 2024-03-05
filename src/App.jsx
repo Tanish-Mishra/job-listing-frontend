@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage/HomePage"
 import LoginPage from "./pages/LoginPage/LoginPage"
 import RegisterPage from "./pages/RegisterPage/RegisterPage"
 import JobPage from "./pages/JobPage/JobPage"
+import JobDetailsPage from "./pages/JobDetailsPage/JobDetailsPage"
 function App() {
 
   return (
@@ -14,6 +15,7 @@ function App() {
          <Route path="/register" element={<RegisterPage/>}/>
          <Route path='/' element={<HomePage/>}/> 
          <Route path="/add-job" element={<JobPage/>} />
+         <Route path="/job-details/:id" element={<JobDetailsPage/>} />
        </Routes>
 
     </>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
+import toast,{ Toaster } from "react-hot-toast";
 import {checkLogin} from "../../apis/auth";
 import errorHandler from "../../utils/errorHandler";
 
@@ -26,7 +26,22 @@ const Login = () => {
   const authLogin = async (name, email, password) => {
     const response = await checkLogin(name, email, password);
     if (response?.data?.name) {
-      navigate("/");
+
+      toast.success('Logged In!', {
+        style: {
+          border: '1px solid #713200',
+          padding: '16px',
+          color: '#713200',
+        },
+        iconTheme: {
+          primary: '#713200',
+          secondary: '#FFFAEE',
+        },
+      });
+
+      setTimeout(()=>{
+       navigate('/')
+      },2000)
     }
   };
 

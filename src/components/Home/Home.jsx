@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './Home.module.css'
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 const Home = () => {
   const navigate = useNavigate()
+  useEffect(()=>{
+    // Cookies.get("token")
+    const token = Cookies.get('token');
+    console.log(token)
+  },[])
   return ( 
     <div className={styles.home}>
          <div className={styles.header}>

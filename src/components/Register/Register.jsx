@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./Register.module.css";
 import { Link } from "react-router-dom";
 import { register } from "../../apis/auth";
-import { Toaster } from "react-hot-toast";
+import toast,{ Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import errorHandler from "../../utils/errorHandler";
 const Register = () => {
@@ -27,8 +27,24 @@ const Register = () => {
   };
   const createUser = async(name,email,password) => {
          const response = await register(name,email,password)
+         
          if(response.status==201) {
+          toast.success('Account Created Successfully!', {
+            style: {
+              border: '1px solid #713200',
+              padding: '16px',
+              color: '#713200',
+            },
+            iconTheme: {
+              primary: '#713200',
+              secondary: '#FFFAEE',
+            },
+          });
+
+          setTimeout(()=>{
            navigate('/login')
+          },2000)
+          
          }
   }
 
