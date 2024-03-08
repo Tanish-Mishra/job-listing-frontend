@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { createJob } from "../../apis/job";
+import { editJob, createJob } from "../../apis/job";
 import { DEFAULT_SKILLS } from "../../utils/constants";
 import styles from "./AddJob.module.css";
 
 const AddJob = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const [stateData] = useState(state?.jobDetails);
   const [formData, setFormData] = useState({
-    companyName: "",
-    title: "",
-    description: "",
-    logoUrl: "",
-    salary: "",
-    location: "",
-    duration: "",
-    locationType: "",
-    skills: [],
-    aboutCompany: "",
-    information: "",
-    aboutJob: "",
+    companyName: "" || stateData?.companyName,
+    title: "" || stateData?.title,
+    description: "" || stateData?.description,
+    logoUrl: "" || stateData?.logoUrl,
+    salary: "" || stateData?.salary,
+    location: "" || stateData?.location,
+    duration: "" || stateData?.duration,
+    locationType: "" || stateData?.locationType,
+    skills: stateData?.skills || [],
+    aboutCompany: "" || stateData?.aboutCompany,
+    information: "" || stateData?.information,
+    aboutJob: "" || stateData?.aboutJob,
   });
 
   const handleFormData = (event) => {
@@ -45,19 +48,27 @@ const AddJob = () => {
   const removeSkill = (skill) => {
     const actualSkills = formData.skills;
     const filteredSkill = actualSkills.filter((element) => element !== skill);
-    console.log(filteredSkill);
     setFormData({ ...formData, skills: filteredSkill });
   };
-  const handleSubmit = (event) => {
+  const handleSubmit =  async(event) => {
     event.preventDefault();
-    createJobData();
+    if (state?.edit) {
+     const response = await editJob(stateData?._id, formData);
+     if(response?.status == 200){
+      navigate(`/job-details/${stateData?._id}`);
+     }
+      return;
+    } 
+   createJobData();
+  
   };
-  useEffect(()=>{
-   const token = localStorage.getItem("token")
-   if(!token) {
-    navigate('/')
-   }
-  },[])
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/");
+    }
+  }, []);
   return (
     <div className={styles.job}>
       <h2 className={styles.job__header}>Add Job Description</h2>
@@ -68,6 +79,7 @@ const AddJob = () => {
             type="text"
             placeholder="Enter your company name here"
             name="companyName"
+            value={formData.companyName}
             onChange={(event) => {
               handleFormData(event);
             }}
@@ -79,6 +91,7 @@ const AddJob = () => {
             type="text"
             placeholder="Enter the link"
             name="logoUrl"
+            value={formData.logoUrl}
             onChange={(event) => {
               handleFormData(event);
             }}
@@ -90,6 +103,7 @@ const AddJob = () => {
             type="text"
             placeholder="Enter the link"
             name="duration"
+            value={formData.duration}
             onChange={(event) => {
               handleFormData(event);
             }}
@@ -101,6 +115,7 @@ const AddJob = () => {
             type="text"
             placeholder="Enter Job Position"
             name="title"
+            value={formData.title}
             onChange={(event) => {
               handleFormData(event);
             }}
@@ -112,6 +127,7 @@ const AddJob = () => {
             type="text"
             placeholder="Enter Job Description"
             name="description"
+            value={formData.description}
             onChange={(event) => {
               handleFormData(event);
             }}
@@ -123,6 +139,7 @@ const AddJob = () => {
             type="text"
             placeholder="Enter amount in rupees"
             name="salary"
+            value={formData.salary}
             onChange={(event) => {
               handleFormData(event);
             }}
@@ -133,6 +150,7 @@ const AddJob = () => {
           {/* <input type="text" placeholder="Enter your company name here" /> */}
           <select
             name="locationType"
+            value={formData.locationType}
             onChange={(event) => {
               handleFormData(event);
             }}
@@ -147,6 +165,7 @@ const AddJob = () => {
             type="text"
             placeholder="Enter Location"
             name="location"
+            value={formData.location}
             onChange={(event) => {
               handleFormData(event);
             }}
@@ -159,6 +178,7 @@ const AddJob = () => {
           <textarea
             placeholder="Type about the job/internship"
             name="aboutJob"
+            value={formData.aboutJob}
             onChange={(event) => {
               handleFormData(event);
             }}
@@ -171,6 +191,7 @@ const AddJob = () => {
           <textarea
             placeholder="Type about your company"
             name="aboutCompany"
+            value={formData.aboutCompany}
             onChange={(event) => {
               handleFormData(event);
             }}
@@ -180,6 +201,7 @@ const AddJob = () => {
           <span>Skills Required</span>
           <select
             name="skills"
+            value={formData.skills}
             onChange={(event) => {
               addSkill(event);
             }}
@@ -219,6 +241,7 @@ const AddJob = () => {
             type="text"
             placeholder="Enter the additional information"
             name="information"
+            value={formData.information}
             onChange={(event) => {
               handleFormData(event);
             }}
@@ -239,7 +262,7 @@ const AddJob = () => {
               handleSubmit(event);
             }}
           >
-            + Add Job
+            {state?.edit ? "Edit Job" : "+ Add Job"}
           </button>
         </div>
       </div>

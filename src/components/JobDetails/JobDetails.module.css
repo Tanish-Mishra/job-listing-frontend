@@ -100,6 +100,9 @@ font-weight: 700;
 background: #ED5353;
 color: #fff;
 }
+.edit__job:hover {
+    scale:1.05;
+}
 .job__main_time_duration {
     display: flex;
     flex-direction: column;

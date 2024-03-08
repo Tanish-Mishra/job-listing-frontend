@@ -44,8 +44,19 @@ export const createJob = async ({
       skills,
       aboutJob,
     });
-    console.log(response);
   } catch (error) {
     errorHandler("Error While Creating Job!");
+  }
+};
+
+export const editJob = async (jobId,jobPayload) => {
+  try {
+    const reqUrl = `${BACKENDURI}/jobs/edit/${jobId}`;
+    const token = JSON.parse(localStorage.getItem("token"));
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    const response = await axios.put(reqUrl,jobPayload);
+    return response
+  } catch (error) {
+    errorHandler("Error While Editing Job!");
   }
 };
