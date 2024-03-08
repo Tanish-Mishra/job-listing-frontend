@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
 import { DEFAULT_SKILLS } from "../../utils/constants";
+import { useLocation } from "react-router-dom";
+import { getAllJob } from "../../apis/job";
 
 import Profile from "/assets/images/profile.png";
 import CompanyLogo from "/assets/icons/company.png";
@@ -11,15 +13,28 @@ import Group from "/assets/icons/group.png";
 const Home = () => {
   const navigate = useNavigate();
   const [token, setToken] = useState();
-  useEffect(() => {
-    const getToken = JSON.parse(localStorage.getItem("token"));
-    setToken(getToken);
-  }, []);
+  const [allJobs, setAllJobs] = useState([]);
+  const {state} = useLocation()
+  const [title, setTitle] = useState("")
+  const [skills, setSkills] = useState([])
+ 
   const removeToken = () => {
     const tokenValue = "";
     setToken(tokenValue);
     localStorage.removeItem("token");
   };
+
+  const fetchAllJob = async() => {
+       const response = await getAllJob(title);
+       setAllJobs(response?.data)
+  }
+
+  useEffect(() => {
+    const getToken = JSON.parse(localStorage.getItem("token"));
+    setToken(getToken);
+    fetchAllJob()
+  }, []);
+
   return (
     <div className={styles.home}>
       <div className={styles.header}>
@@ -53,14 +68,13 @@ const Home = () => {
             >
               Logout
             </button>
-            <span className={styles.header__recruiter}>Hello! Recruiter </span>
+            <span className={styles.header__recruiter}>Hello! {state?.name} </span>
             <div className={styles.header__img}>
               <img
                 src={Profile}
                 alt="error"
                 height="50px"
                 width="50px"
-                style={{}}
               />
             </div>
           </div>
@@ -73,6 +87,9 @@ const Home = () => {
             name="title"
             className={styles.home__searchbar}
             placeholder="Type any job title"
+            onChange={(event)=>{
+              setTitle(event.target.value)
+            }}
           />
           <div className={styles.home__search_skills}>
             <div className={styles.home__skills_filter}>
@@ -96,7 +113,9 @@ const Home = () => {
               </div>
             </div>
             <div className={styles.home__applyfilter_cont}>
-              <button className={styles.home__applyfilter}>Apply Filter</button>
+              <button className={styles.home__applyfilter} onClick={()=>{
+                fetchAllJob() 
+              }}>Apply Filter</button>
               {token ? <button className={styles.home__applyfilter}>+ Add Job</button> : <></> }
               <span>Clear</span>
             </div>
@@ -105,45 +124,56 @@ const Home = () => {
       </div>
 
       <div className={styles.home__cards_cont}>
-        {/* card start  */} 
+        { allJobs.data?.map((job)=>(
         <div className={styles.cards}>
           <div className={styles.cards__details_cont}>
-            <img src={CompanyLogo} alt="error" height="50px" width="50px" />
+            <img src={job?.logoUrl} alt="error" height="50px" width="50px" />
             <div className={styles.cards__details}>
-              <span className={styles.cards__job_tile}>Job Title</span>
+              <span className={styles.cards__job_tile}>{job?.title}</span>
               <div className={styles.cards__jobdetail}>
                 <span className={styles.cards_number_details}>
                   <img src={Group} alt="error" /> 11-50
                 </span>
                 <span className={styles.cards_number_details}>
-                  <img src={Paisa} alt="error" /> 50000
+                  <img src={Paisa} alt="error" /> {job?.salary}
                 </span>
                 <span className={styles.cards_number_details}>
                   <img src={India} alt="error" height="30px" width="30px" />{" "}
-                  Delhi
+                  {job?.location}
                 </span>
               </div>
               <div className={styles.cards__location}>
-                <span>Remote</span>
-                <span>Full Time</span>
+                <span>{job?.duration}</span>
+                <span>{job?.locationType}</span>
               </div>
             </div>
           </div>
           <div className={styles.cards__filters}>
+              
             <div className={styles.cards__filters_cont}>
-              <div className={styles.cards__filters_card}>fdafa</div>
-              <div className={styles.cards__filters_card}>fdafa</div>
-              <div className={styles.cards__filters_card}>fdafa</div>
-              <div className={styles.cards__filters_card}>fdafa</div>
+              {job?.skills.map((skill)=>(
+              <div className={styles.cards__filters_card}>{skill}</div>
+              ))}
             </div>
 
             <div className={styles.cards__btncont}>
-              {token ? <button className={styles.home__applyfilter}>Edit Job</button> : <></>}
-              <button className={styles.home__applyfilter}>View Details</button>
+              {token ? <button className={styles.home__applyfilter} onClick={()=>{
+                    
+                        navigate("/add-job", {
+                          state: {
+                            jobId: job?._id,
+                            jobDetails: job,
+                            edit: true,
+                          },
+                        })
+                      }}  >Edit Job</button> : <></>}
+              <button className={styles.home__applyfilter} onClick={()=>{
+                   navigate(`/job-details/${job?._id}`)
+              }}>View Details</button>
             </div>
           </div>
         </div>
-        {/* card end  */}
+             ))}  
       </div>
     </div>
   );

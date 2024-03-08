@@ -60,3 +60,12 @@ export const editJob = async (jobId,jobPayload) => {
     errorHandler("Error While Editing Job!");
   }
 };
+export const getAllJob = async (title,skills) => {
+  try {
+    const reqUrl = `${BACKENDURI}/jobs/all-job?title=${title}`;
+    const response = await axios.get(reqUrl);
+    return response
+  } catch (error) {
+    errorHandler("Error While Editing Job!");
+  }
+};

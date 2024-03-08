@@ -40,7 +40,11 @@ const Login = () => {
       });
    localStorage.setItem("token",JSON.stringify(response?.data?.token))
       setTimeout(()=>{
-       navigate('/')
+       navigate('/',{state: {
+        name: formData.name,
+       }
+      
+      })
       },2000)
     }
   };
