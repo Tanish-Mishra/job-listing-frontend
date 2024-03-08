@@ -4,15 +4,18 @@ import { useAsyncError, useNavigate, useParams } from 'react-router-dom'
 
 import { fetchJobById } from '../../apis/job'
 
+import Profile from '/assets/images/profile.png'
+
 const JobDetails = () => {
     const navigate = useNavigate()
     const {id} = useParams()
    const [jobData,setJobData] = useState()
    const [weeksData,setWeeksData] = useState()
+   const [token,setToken] = useState()
+
+    // Cookies.get("token") 
    
-    useEffect(()=>{
-        fetchJob()
-    },[])
+
 
     const fetchJob = async() => {
         const response = await fetchJobById(id);
@@ -37,20 +40,54 @@ const JobDetails = () => {
         return weeks;
     }
 
-    
+     
+    const removeToken = () => {
+        const  tokenValue = ""
+        setToken(tokenValue)
+        localStorage.removeItem('token');
+     
+       }
 
+    useEffect(()=>{
+        const getToken = JSON.parse(localStorage.getItem('token'))
+        setToken(getToken)
+        fetchJob()
+    },[])
     
-
   return (
 
  <div className={styles.job}>
     <div className={styles.header}>
           <div className={styles.header__name}>Jobfinder</div>
-          <div className={styles.header__buttons}>
+
+          {/* <div className={styles.header__buttons}>
              <button className={styles.header__btn} onClick={()=>{navigate('/login')}}>Login</button>
              <button className={`${styles.header__btn} ${styles.header__register}`} onClick={()=>{navigate('/register')}}>Register</button>
-          </div>
+          </div> */}
+
+{ !token ?
+               <div className={styles.header__buttons}>
+                  <button className={styles.header__btn} onClick={()=>{navigate('/login')}}>Login</button>
+                  <button className={`${styles.header__btn} ${styles.header__register}`} onClick={()=>{navigate('/register')}}>Register</button>
+               </div> : 
+               <div className={styles.header__recruiter_container}>
+                  <button className={styles.header__btn} onClick={()=>{
+                 removeToken()
+                  }}>Logout</button>
+                 <span className={styles.header__recruiter}>Hello! Recruiter </span>
+                <div className={styles.header__img}>
+                <img src={Profile} alt='error' height='50px' width='50px' style={{
+                }}/> 
+                </div>
+               </div> 
+              
+               
+}
+
     </div>
+
+
+
 
     <div className={styles.job__body}>
 
@@ -64,7 +101,7 @@ const JobDetails = () => {
 
             <span className={styles.job__main_header}>{weeksData}w ago &#183; {jobData?.locationType} &nbsp;{jobData?.companyName}</span>
             <div className={styles.job__main_title}> <h3>{jobData?.title}</h3>
-            <button className={styles.edit__job}>Edit Job</button>
+           {token ?  <button className={styles.edit__job}>Edit Job</button> : <></> }
             </div>
             <span className={styles.job__main_location}>{jobData?.location}</span>
              <div className={styles.job__main_time_duration}> 

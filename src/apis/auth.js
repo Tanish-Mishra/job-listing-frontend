@@ -1,26 +1,29 @@
-import React from 'react'
-import axios from 'axios';
-import errorHandler from '../utils/errorHandler';
+import React from "react";
+import axios from "axios";
+import errorHandler from "../utils/errorHandler";
 
-const BACKENDURI= import.meta.env.VITE_BACKEND_URI;
-export const checkLogin = async(name,email,password) => {
+const BACKENDURI = import.meta.env.VITE_BACKEND_URI;
+export const checkLogin = async (name, email, password) => {
   try {
-     const reqUrl = `${BACKENDURI}/auth/login`
-     const response = await axios.post(reqUrl,{name,email,password, withCredentials: true})
-
-     return response
+    const reqUrl = `${BACKENDURI}/auth/login`;
+    const response = await axios.post(reqUrl, {
+      name,
+      email,
+      password,
+      withCredentials: true,
+    });
+    return response;
   } catch (error) {
-    errorHandler('Check Your Password/Username!')
+    errorHandler("Check Your Password/Username!");
   }
-}
+};
 
-export const register = async(name,email,password) =>{
-    try {
-        const reqUrl = `${BACKENDURI}/auth/register`
-        const response = await axios.post(reqUrl,{name,email,password})
-        return response
-    } catch (error) {
-        errorHandler('Api Failed!')
-    }
-}
-
+export const register = async (name, email, password) => {
+  try {
+    const reqUrl = `${BACKENDURI}/auth/register`;
+    const response = await axios.post(reqUrl, { name, email, password });
+    return response;
+  } catch (error) {
+    errorHandler("Api Failed!");
+  }
+};

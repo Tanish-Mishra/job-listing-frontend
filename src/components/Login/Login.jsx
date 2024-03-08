@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -38,7 +38,7 @@ const Login = () => {
           secondary: '#FFFAEE',
         },
       });
-
+   localStorage.setItem("token",JSON.stringify(response?.data?.token))
       setTimeout(()=>{
        navigate('/')
       },2000)
@@ -121,6 +121,14 @@ const Login = () => {
       authLogin(formData.name, formData.email, formData.password);
     }
   };
+
+  useEffect(()=>{
+    const token = localStorage.getItem("token")
+    if(token) {
+     navigate('/')
+    }
+   },[])
+
   return (
     <div className={styles.login}>
       <Toaster position="top-right" reverseOrder={false} />

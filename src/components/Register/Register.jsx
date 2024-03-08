@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Register.module.css";
 import { Link } from "react-router-dom";
 import { register } from "../../apis/auth";
@@ -124,6 +124,14 @@ const Register = () => {
     createUser(formData.name,formData.email,formData.password)
    } 
   }
+
+  useEffect(()=>{
+    const token = localStorage.getItem("token")
+    if(token) {
+     navigate('/')
+    }
+   },[])
+
   return (
     <div className={styles.register}>
       <Toaster position="top-right" reverseOrder={false} />

@@ -143,3 +143,23 @@ color: #fff;
 .job__main_about {
     color:#595959;
 }
+
+.header__recruiter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
+}
+.header__img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header__recruiter_container  {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+}

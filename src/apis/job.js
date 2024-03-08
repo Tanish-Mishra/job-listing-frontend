@@ -28,6 +28,8 @@ export const createJob = async ({
 }) => {
   try {
     const reqUrl = `${BACKENDURI}/jobs/create`;
+    const token = JSON.parse(localStorage.getItem("token"));
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     const response = await axios.post(reqUrl, {
       companyName,
       title,

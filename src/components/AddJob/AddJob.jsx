@@ -30,7 +30,7 @@ const AddJob = () => {
 
   const createJobData = async () => {
     const response = await createJob({ ...formData });
-    console.log(response);
+    // console.log(response);
   };
 
   const addSkill = (event) => {
@@ -52,7 +52,12 @@ const AddJob = () => {
     event.preventDefault();
     createJobData();
   };
-
+  useEffect(()=>{
+   const token = localStorage.getItem("token")
+   if(!token) {
+    navigate('/')
+   }
+  },[])
   return (
     <div className={styles.job}>
       <h2 className={styles.job__header}>Add Job Description</h2>
@@ -74,6 +79,17 @@ const AddJob = () => {
             type="text"
             placeholder="Enter the link"
             name="logoUrl"
+            onChange={(event) => {
+              handleFormData(event);
+            }}
+          />
+        </div>
+        <div className={styles.job__fields}>
+          <span>Duration</span>
+          <input
+            type="text"
+            placeholder="Enter the link"
+            name="duration"
             onChange={(event) => {
               handleFormData(event);
             }}
