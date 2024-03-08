@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import styles from "./JobDetails.module.css";
 import { useAsyncError, useNavigate, useParams } from "react-router-dom";
 
@@ -12,7 +13,8 @@ const JobDetails = () => {
   const [jobData, setJobData] = useState();
   const [weeksData, setWeeksData] = useState();
   const [token, setToken] = useState();
-
+ const {state} = useLocation()
+  const [name,setName] = useState(state?.name || "Recruiter")
   // Cookies.get("token")
 
   const fetchJob = async () => {
@@ -88,7 +90,7 @@ const JobDetails = () => {
             >
               Logout
             </button>
-            <span className={styles.header__recruiter}>Hello! Recruiter </span>
+            <span className={styles.header__recruiter}>Hello! {name} </span>
             <div className={styles.header__img}>
               <img
                 src={Profile}

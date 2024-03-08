@@ -22,6 +22,8 @@ const AddJob = () => {
     aboutCompany: "" || stateData?.aboutCompany,
     information: "" || stateData?.information,
     aboutJob: "" || stateData?.aboutJob,
+    companySize:"" || stateData?.companySize,
+
   });
 
   const handleFormData = (event) => {
@@ -33,6 +35,7 @@ const AddJob = () => {
 
   const createJobData = async () => {
     const response = await createJob({ ...formData });
+    return response
     // console.log(response);
   };
 
@@ -59,8 +62,10 @@ const AddJob = () => {
      }
       return;
     } 
-   createJobData();
-  
+        const responseJob = await createJobData();
+      if(responseJob?.status == 201) {
+        navigate('/')
+      }
   };
 
   useEffect(() => {
@@ -92,6 +97,18 @@ const AddJob = () => {
             placeholder="Enter the link"
             name="logoUrl"
             value={formData.logoUrl}
+            onChange={(event) => {
+              handleFormData(event);
+            }}
+          />
+        </div>
+        <div className={styles.job__fields}>
+          <span>Company Size</span>
+          <input
+            type="text"
+            placeholder="Company Size"
+            name="companySize"
+            value={formData.companySize}
             onChange={(event) => {
               handleFormData(event);
             }}

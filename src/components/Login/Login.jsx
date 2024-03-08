@@ -38,12 +38,11 @@ const Login = () => {
           secondary: '#FFFAEE',
         },
       });
-   localStorage.setItem("token",JSON.stringify(response?.data?.token))
+       localStorage.setItem("token",JSON.stringify(response?.data?.token))
       setTimeout(()=>{
        navigate('/',{state: {
         name: formData.name,
        }
-      
       })
       },2000)
     }

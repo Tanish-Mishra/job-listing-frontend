@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage/LoginPage"
 import RegisterPage from "./pages/RegisterPage/RegisterPage"
 import JobPage from "./pages/JobPage/JobPage"
 import JobDetailsPage from "./pages/JobDetailsPage/JobDetailsPage"
+import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute"
 function App() {
 
   return (

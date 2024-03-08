@@ -25,6 +25,7 @@ export const createJob = async ({
   information,
   skills,
   aboutJob,
+  companySize,
 }) => {
   try {
     const reqUrl = `${BACKENDURI}/jobs/create`;
@@ -43,7 +44,10 @@ export const createJob = async ({
       information,
       skills,
       aboutJob,
+      companySize,
     });
+    return response
+
   } catch (error) {
     errorHandler("Error While Creating Job!");
   }
@@ -62,7 +66,8 @@ export const editJob = async (jobId,jobPayload) => {
 };
 export const getAllJob = async (title,skills) => {
   try {
-    const reqUrl = `${BACKENDURI}/jobs/all-job?title=${title}`;
+    const filteredSkills = skills.join(",")
+    const reqUrl = `${BACKENDURI}/jobs/all-job?title=${title}&skills=${filteredSkills}`;
     const response = await axios.get(reqUrl);
     return response
   } catch (error) {

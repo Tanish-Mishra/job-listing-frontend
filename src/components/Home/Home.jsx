@@ -23,9 +23,28 @@ const Home = () => {
     setToken(tokenValue);
     localStorage.removeItem("token");
   };
+ const addSkill = (event) => {
+  const newArr = skills.filter((skill)=>(
+          skill === event.target.value
+  ))
+  if(!newArr.length) {
+    setSkills([...skills,event.target.value])
+  }
+ }
 
+ const removeSkill = (skill) => {
+
+    const newArr = skills.filter((item)=>(
+            item !== skill
+    ))
+
+   setSkills([...newArr])
+   console.log(newArr)
+ }
+       
+ 
   const fetchAllJob = async() => {
-       const response = await getAllJob(title);
+       const response = await getAllJob(title,skills);
        setAllJobs(response?.data)
   }
 
@@ -93,13 +112,15 @@ const Home = () => {
           />
           <div className={styles.home__search_skills}>
             <div className={styles.home__skills_filter}>
-              <select name="lol" className={styles.home__select_skill}>
-                <option value="Select">Select</option>
+              <select name="skill" className={styles.home__select_skill} onChange={(event)=>{
+                addSkill(event)
+              }}>
+                <option disabled>Select</option>
                 {DEFAULT_SKILLS.map((item) => {
                   return <option value={item}>{item}</option>;
                 })}
               </select>
-
+   {skills.map((skill)=>(
               <div className={styles.home__filters}>
                 <span
                   className={styles.home__name}
@@ -107,16 +128,21 @@ const Home = () => {
                     marginLeft: "10px",
                   }}
                 >
-                  Filter
+              {skill}
                 </span>
-                <button className={styles.home__cross_btn}>X</button>
+                <button className={styles.home__cross_btn} onClick={()=>{
+                    removeSkill(skill)
+                }}>X</button>
               </div>
+              ))}
             </div>
             <div className={styles.home__applyfilter_cont}>
               <button className={styles.home__applyfilter} onClick={()=>{
                 fetchAllJob() 
               }}>Apply Filter</button>
-              {token ? <button className={styles.home__applyfilter}>+ Add Job</button> : <></> }
+              {token ? <button className={styles.home__applyfilter} onClick={()=>{
+                navigate("/add-job")
+              }}>+ Add Job</button> : <></> }
               <span>Clear</span>
             </div>
           </div>
@@ -132,7 +158,7 @@ const Home = () => {
               <span className={styles.cards__job_tile}>{job?.title}</span>
               <div className={styles.cards__jobdetail}>
                 <span className={styles.cards_number_details}>
-                  <img src={Group} alt="error" /> 11-50
+                  <img src={Group} alt="error" /> {job?.companySize}
                 </span>
                 <span className={styles.cards_number_details}>
                   <img src={Paisa} alt="error" /> {job?.salary}
@@ -168,7 +194,11 @@ const Home = () => {
                         })
                       }}  >Edit Job</button> : <></>}
               <button className={styles.home__applyfilter} onClick={()=>{
-                   navigate(`/job-details/${job?._id}`)
+                   navigate(`/job-details/${job?._id}`,{
+                    state: {
+                      name: state?.name
+                    }
+                   })
               }}>View Details</button>
             </div>
           </div>
