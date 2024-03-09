@@ -10,6 +10,8 @@ import CompanyLogo from "/assets/icons/company.png";
 import Paisa from "/assets/icons/paisa.png";
 import India from "/assets/icons/india.png";
 import Group from "/assets/icons/group.png";
+
+import Cookies from "js-cookie";
 const Home = () => {
   const navigate = useNavigate();
   const [token, setToken] = useState();
@@ -53,6 +55,7 @@ const Home = () => {
     const getToken = JSON.parse(localStorage.getItem("token"));
     setToken(getToken);
     fetchAllJob()
+
   }, []);
 
   return (
@@ -88,7 +91,7 @@ const Home = () => {
             >
               Logout
             </button>
-            <span className={styles.header__recruiter}>Hello! {state?.name || Recruiter} </span>
+            <span className={styles.header__recruiter}>Hello! {state?.name || "Recruiter"} </span>
             <div className={styles.header__img}>
               <img
                 src={Profile}
