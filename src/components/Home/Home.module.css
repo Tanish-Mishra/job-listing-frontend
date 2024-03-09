@@ -260,3 +260,9 @@
     justify-content: center;
     gap: 0.6rem;
 }
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}

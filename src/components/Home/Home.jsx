@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { DEFAULT_SKILLS } from "../../utils/constants";
 import { useLocation } from "react-router-dom";
 import { getAllJob } from "../../apis/job";
-
+import LoadingSpin from "react-loading-spin";
 import Profile from "/assets/images/profile.png";
 import CompanyLogo from "/assets/icons/company.png";
 import Paisa from "/assets/icons/paisa.png";
@@ -148,7 +148,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-
+  {allJobs.data?.length !== 0 ?  
       <div className={styles.home__cards_cont}>
         { allJobs.data?.map((job)=>(
         <div className={styles.cards}>
@@ -205,6 +205,7 @@ const Home = () => {
         </div>
              ))}  
       </div>
+      : <div className={styles.loader}> <LoadingSpin />  </div> }
     </div>
   );
 };

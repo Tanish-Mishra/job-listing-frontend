@@ -118,7 +118,7 @@ const AddJob = () => {
           <span>Duration</span>
           <input
             type="text"
-            placeholder="Enter the link"
+            placeholder="Enter the Duration"
             name="duration"
             value={formData.duration}
             onChange={(event) => {
