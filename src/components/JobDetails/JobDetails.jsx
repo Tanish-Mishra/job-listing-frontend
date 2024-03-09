@@ -54,7 +54,7 @@ const JobDetails = () => {
   return (
     <div className={styles.job}>
       <div className={styles.header}>
-        <div className={styles.header__name}>Jobfinder</div>
+        <div className={styles.header__name}>Jobs India</div>
 
         {/* <div className={styles.header__buttons}>
              <button className={styles.header__btn} onClick={()=>{navigate('/login')}}>Login</button>

@@ -58,7 +58,7 @@ const Home = () => {
   return (
     <div className={styles.home}>
       <div className={styles.header}>
-        <div className={styles.header__name}>Jobfinder</div>
+        <div className={styles.header__name}>Jobs India</div>
         {!token ? (
           <div className={styles.header__buttons}>
             <button
