@@ -148,7 +148,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-  {allJobs.data?.length !== 0 ?  
+  {allJobs.data?.length === 0 ?  
       <div className={styles.home__cards_cont}>
         { allJobs.data?.map((job)=>(
         <div className={styles.cards}>
@@ -205,7 +205,12 @@ const Home = () => {
         </div>
              ))}  
       </div>
-      : <div className={styles.loader}> <LoadingSpin />  </div> }
+      : <div className={styles.loader}> <LoadingSpin 
+            primaryColor="#ED5353"
+            secondaryColor="#333"
+            size="100px"
+            width='8px'
+      />  </div> }
     </div>
   );
 };
