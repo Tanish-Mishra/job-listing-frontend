@@ -88,7 +88,7 @@ const Home = () => {
             >
               Logout
             </button>
-            <span className={styles.header__recruiter}>Hello! {state?.name} </span>
+            <span className={styles.header__recruiter}>Hello! {state?.name || Recruiter} </span>
             <div className={styles.header__img}>
               <img
                 src={Profile}
