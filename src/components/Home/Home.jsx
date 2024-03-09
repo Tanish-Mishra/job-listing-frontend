@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
 import { DEFAULT_SKILLS } from "../../utils/constants";
@@ -17,6 +17,7 @@ const Home = () => {
   const {state} = useLocation()
   const [title, setTitle] = useState("")
   const [skills, setSkills] = useState([])
+  const titleValue = useRef(null)
  
   const removeToken = () => {
     const tokenValue = "";
@@ -44,8 +45,8 @@ const Home = () => {
        
  
   const fetchAllJob = async() => {
-       const response = await getAllJob(title,skills);
-       setAllJobs(response?.data)
+      const response =  await getAllJob(title,skills);
+      setAllJobs(response?.data)
   }
 
   useEffect(() => {
@@ -109,6 +110,7 @@ const Home = () => {
             onChange={(event)=>{
               setTitle(event.target.value)
             }}
+            ref={titleValue}
           />
           <div className={styles.home__search_skills}>
             <div className={styles.home__skills_filter}>
@@ -143,14 +145,18 @@ const Home = () => {
               {token ? <button className={styles.home__applyfilter} onClick={()=>{
                 navigate("/add-job")
               }}>+ Add Job</button> : <></> }
-              <span>Clear</span>
+              <span onClick={()=>{
+                setTitle("")
+                setSkills([])
+                titleValue.current.value=""
+              }}>Clear</span>
             </div>
           </div>
         </div>
       </div>
-  {allJobs.data?.length != 0 ?  
+
       <div className={styles.home__cards_cont}>
-        { allJobs.data?.map((job)=>(
+        {allJobs.data?.length !== 0 ?  allJobs.data?.map((job)=>(
         <div className={styles.cards}>
           <div className={styles.cards__details_cont}>
             <img src={job?.logoUrl} alt="error" height="50px" width="50px" />
@@ -203,14 +209,13 @@ const Home = () => {
             </div>
           </div>
         </div>
-             ))}  
+             )): <div className={styles.loader}> <LoadingSpin 
+             primaryColor="#ED5353"
+             secondaryColor="#333"
+             size="100px"
+             width='8px'
+       />  </div>   }  
       </div>
-      : <div className={styles.loader}> <LoadingSpin 
-            primaryColor="#ED5353"
-            secondaryColor="#333"
-            size="100px"
-            width='8px'
-      />  </div> }
     </div>
   );
 };
