@@ -22,12 +22,11 @@ Visit [JobsIndia Platform](https://jobsindia.vercel.app) to browse through the l
 4. Edit your job listings as needed.
 
 ## Screenshots
-<img width="1440" alt="Screenshot 2024-03-09 at 6 18 46 PM" src="https://github.com/Tanish-Mishra/job-listing-frontend/assets/107027726/e13ae67c-e9c6-486c-9e7d-1e941836e830">
-<img width="1440" alt="Screenshot 2024-03-09 at 6 18 58 PM" src="https://github.com/Tanish-Mishra/job-listing-frontend/assets/107027726/ddaffa36-5610-48e7-9<img width="1429" alt="Screenshot 2024-03-09 at 6 20 21 PM" src="https://github.com/Tanish-Mishra/job-listing-frontend/assets/107027726/ca31ab8a-50a7-4274-bd33-5afef9a5eb79">
-e55-bf64104a0050">
-<img width="1440" alt="Screenshot 2024-03-09 at 6 19 56 PM" src="https://github.com/Tanish-Mishra/job-listing-frontend/assets/107027726/7292edce-c04e-494f-a600-fa3cb8361d63">
-<img width="1440" alt="Screenshot 2024-03-09 at 6 22 06 PM" src="https://github.com/Tanish-Mishra/job-listing-frontend/assets/107027726/5a5c9826-2645-4ef6-babe-779f889ee4fb">
-
+<img width="1440" alt="Screenshot 2024-03-09 at 6 22 06 PM" src="https://github.com/Tanish-Mishra/job-listing-frontend/assets/107027726/db009b5e-1fd2-4327-b264-2a108f98b7a1">
+<img width="1429" alt="Screenshot 2024-03-09 at 6 20 21 PM" src="https://github.com/Tanish-Mishra/job-listing-frontend/assets/107027726/cdf6db0e-56dc-451f-a985-bd5d3513437d">
+<img width="1440" alt="Screenshot 2024-03-09 at 6 19 56 PM" src="https://github.com/Tanish-Mishra/job-listing-frontend/assets/107027726/b4a518be-4a70-472d-9c54-fd57b90ba075">
+<img width="1440" alt="Screenshot 2024-03-09 at 6 18 58 PM" src="https://github.com/Tanish-Mishra/job-listing-frontend/assets/107027726/d7c4b617-bf44-4ca4-8a02-3c93165cb343">
+<img width="1440" alt="Screenshot 2024-03-09 at 6 18 46 PM" src="https://github.com/Tanish-Mishra/job-listing-frontend/assets/107027726/43da01d7-8be5-43ea-bd43-401577743e05">
 
 ## Technologies Used
 - **HTML**: For structuring the web pages.
