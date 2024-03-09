@@ -6,7 +6,6 @@ const BACKENDURI = import.meta.env.VITE_BACKEND_URI;
 export const checkLogin = async (name, email, password) => {
   try {
     const reqUrl = `${BACKENDURI}/auth/login`;
-    axios.defaults.withCredentials = true;
     const response = await axios.post(reqUrl, {
       name,
       email,
