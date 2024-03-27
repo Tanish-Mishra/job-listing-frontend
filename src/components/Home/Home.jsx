@@ -159,7 +159,7 @@ const Home = () => {
       </div>
 
       <div className={styles.home__cards_cont}>
-        {allJobs.data?.length !== 0 ?  allJobs.data?.map((job)=>(
+        {allJobs?.data?.length > 0 ?  allJobs.data?.map((job)=>(
         <div className={styles.cards}>
           <div className={styles.cards__details_cont}>
             <img src={job?.logoUrl} alt="error" height="50px" width="50px" />
